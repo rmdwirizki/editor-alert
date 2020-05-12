@@ -13,13 +13,13 @@ Provides Code Blocks for the [Editor.js](https://editorjs.io).
 Get the package
 
 ```shell
-npm i --save-dev @groupher/editor-alert
+npm i --save-dev @rmdwirizki/editor-alert
 ```
 
 Include module at your application
 
 ```javascript
-const Alert = require('@groupher/editor-alert');
+const Alert = require('@rmdwirizki/editor-alert');
 ```
 
 ### Download to your project's source dir
@@ -50,7 +50,7 @@ var editor = EditorJS({
 | --------- | -------- | -------------------- |
 | title      | `string` | warning title         |
 | desc  | `string` | warning desc |
-| alert  | `string` | alert type |
+| alert  | `string` | alert type (warning, error, success, info) |
 
 
 ```json
