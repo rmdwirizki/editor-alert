@@ -7,6 +7,7 @@ import "./index.css";
 import WarningIcon from './icon/warning_icon.svg'
 import ErrorIcon from './icon/error_icon.svg'
 import SuccessIcon from './icon/success_icon.svg'
+import InfoIcon from './icon/info_icon.svg'
 
 import {
   checkInlineMarkdownSyntax,
@@ -47,7 +48,7 @@ export default class Alert {
   static get toolbox() {
     return {
       icon: `<svg width="16" height="17" viewBox="0 0 320 294" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M160.5 97c12.426 0 22.5 10.074 22.5 22.5v28c0 12.426-10.074 22.5-22.5 22.5S138 159.926 138 147.5v-28c0-12.426 10.074-22.5 22.5-22.5zm0 83c14.636 0 26.5 11.864 26.5 26.5S175.136 233 160.5 233 134 221.136 134 206.5s11.864-26.5 26.5-26.5zm-.02-135c-6.102 0-14.05 8.427-23.842 25.28l-74.73 127.605c-12.713 21.444-17.806 35.025-15.28 40.742 2.527 5.717 8.519 9.175 17.974 10.373h197.255c5.932-1.214 10.051-4.671 12.357-10.373 2.307-5.702-1.812-16.903-12.357-33.603L184.555 70.281C174.608 53.427 166.583 45 160.48 45zm154.61 165.418c2.216 6.027 3.735 11.967 4.393 18.103.963 8.977.067 18.035-3.552 26.98-7.933 19.612-24.283 33.336-45.054 37.586l-4.464.913H61.763l-2.817-.357c-10.267-1.3-19.764-4.163-28.422-9.16-11.051-6.377-19.82-15.823-25.055-27.664-4.432-10.03-5.235-19.952-3.914-29.887.821-6.175 2.486-12.239 4.864-18.58 3.616-9.64 9.159-20.55 16.718-33.309L97.77 47.603c6.469-11.125 12.743-20.061 19.436-27.158 4.62-4.899 9.562-9.07 15.206-12.456C140.712 3.01 150.091 0 160.481 0c10.358 0 19.703 2.99 27.989 7.933 5.625 3.356 10.563 7.492 15.193 12.354 6.735 7.072 13.08 15.997 19.645 27.12l.142.24 76.986 134.194c6.553 10.46 11.425 19.799 14.654 28.577z"/></svg>`,
-      title: this.i18n === "en" ? "Alert" : "注意/警告"
+      title: "Alert"
     };
   }
 
@@ -67,7 +68,7 @@ export default class Alert {
    * @returns {string}
    */
   static get DEFAULT_TITLE_PLACEHOLDER() {
-    return this.i18n === "en" ? "Title" : "提示信息标题";
+    return "Alert Title";
   }
 
   /**
@@ -77,7 +78,7 @@ export default class Alert {
    * @returns {string}
    */
   static get DEFAULT_DESC_PLACEHOLDER() {
-    return this.i18n === "en" ? "Desc" : "提示描述信息";
+    return "Alert Description";
   }
 
   /**
@@ -93,6 +94,7 @@ export default class Alert {
       sideIconWarning: 'cdx-alert__sideicon--warning',
       sideIconError: 'cdx-alert__sideicon--error',
       sideIconSuccess: 'cdx-alert__sideicon--success',
+      sideIconInfo: 'cdx-alert__sideicon--info',
 
       customSettingWrapper: 'custom-setting-wrapper',
       settingsButton: 'cdx-settings-button',
@@ -103,11 +105,13 @@ export default class Alert {
       titleInputWarning: "cdx-alert__title_input--warning",
       titleInputError: "cdx-alert__title_input--error",
       titleInputSuccess: "cdx-alert__title_input--success",
+      titleInputInfo: "cdx-alert__title_input--info",
 
       descInput: "cdx-alert__desc_input",
       descInputWarning: "cdx-alert__desc_input--warning",
       descInputError: "cdx-alert__desc_input--error",
       descInputSuccess: "cdx-alert__desc_input--success",
+      descInputInfo: "cdx-alert__desc_input--info",
       desc: "cdx-alert__desc"
     };
   }
@@ -121,7 +125,6 @@ export default class Alert {
    */
   constructor({ data, config, api }) {
     this.api = api;
-    this.i18n = config.i18n || "en";
 
     this.defaultTitle = config.title || Alert.DEFAULT_TITLE_PLACEHOLDER;
     this.defaultDesc = config.desc || Alert.DEFAULT_DESC_PLACEHOLDER;
@@ -131,21 +134,26 @@ export default class Alert {
 
     this.settings = [
       {
-        title: '警告提示',
+        title: 'Warning Notice',
         icon: WarningIcon,
         type: 'warning',
       },
       {
-        title: '错误/禁止提示',
+        title: 'Alert Notice',
         icon: ErrorIcon,
         type: 'error',
       },
       {
-        title: '成功提示',
+        title: 'Success Notice',
         icon: SuccessIcon,
         type: 'success',
       },
-    ]
+      {
+        title: 'Info Notice',
+        icon: InfoIcon,
+        type: 'info',
+      },
+    ];
 
     this.data = {
       title: data.title || this.defaultTitle,
@@ -207,7 +215,7 @@ export default class Alert {
    * @return {Element}
    */
   renderSettings() {
-    if(R.isEmpty(this.data.provider)) return this._make('DIV', '')
+    // if(R.isEmpty(this.data.provider)) return this._make('DIV', '')
 
     const Wrapper = this._make('DIV', [this.CSS.customSettingWrapper], {})
 
@@ -245,7 +253,7 @@ export default class Alert {
   }
 
   /**
-   * toggle Alert type between warning | error | success
+   * toggle Alert type between warning | error | success | info
    * 
    * @private
    */
@@ -256,6 +264,8 @@ export default class Alert {
       this.setAlertType('error')
     } else if (currentType === 'error') {
       this.setAlertType('success')
+    } else if (currentType === 'success') {
+      this.setAlertType('info')
     } else {
       this.setAlertType('warning')
     }
@@ -277,6 +287,7 @@ export default class Alert {
       'Warning': WarningIcon,
       'Error': ErrorIcon,
       'Success': SuccessIcon,
+      'Info': InfoIcon,
     } 
 
     this.titleEl.classList.add(this.CSS['titleInput' + typeName])
@@ -295,14 +306,17 @@ export default class Alert {
     this.titleEl.classList.remove(this.CSS.titleInputWarning)
     this.titleEl.classList.remove(this.CSS.titleInputError)
     this.titleEl.classList.remove(this.CSS.titleInputSuccess)
+    this.titleEl.classList.remove(this.CSS.titleInputInfo)
 
     this.descEl.classList.remove(this.CSS.descInputWarning)
     this.descEl.classList.remove(this.CSS.descInputError)
     this.descEl.classList.remove(this.CSS.descInputSuccess)
+    this.descEl.classList.remove(this.CSS.descInputInfo)
 
     this.sideIcon.classList.remove(this.CSS.sideIconWarning)
     this.sideIcon.classList.remove(this.CSS.sideIconError)
     this.sideIcon.classList.remove(this.CSS.sideIconSuccess)
+    this.sideIcon.classList.remove(this.CSS.sideIconInfo)
   }
 
   /**
