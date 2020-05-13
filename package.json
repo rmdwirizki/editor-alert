@@ -17,8 +17,8 @@
     "build:dev": "webpack --mode development --watch"
   },
   "author": {
-    "name": "rmdwirizki",
-    "email": "ryuxote@gmail.com"
+    "name": "groupher team",
+    "email": "support@coderplanets.com"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
