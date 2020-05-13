@@ -27,6 +27,18 @@ const Alert = require('@rmdwirizki/editor-alert');
 1. Upload folder `dist` from repository
 2. Add `dist/bundle.js` file to your page.
 
+### Load from CDN
+
+You can load specific version of package from [jsDelivr CDN](https://www.jsdelivr.com/package/npm/@editorjs/quote).
+
+`https://cdn.jsdelivr.net/npm/@rmdwirizki/editor-alert@1.0.19`
+
+Then require this script on page with Editor.js.
+
+```html
+<script src="..."></script>
+```
+
 ## Usage
 
 Add a new Tool to the `tools` property of the Editor.js initial config.
