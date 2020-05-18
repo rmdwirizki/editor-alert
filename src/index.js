@@ -187,6 +187,8 @@ export default class Alert {
       innerHTML: WarningIcon
     })
 
+    this.setAlertType(this.data.type);
+
     this.api.listeners.on(
       this.descEl,
       "input",
